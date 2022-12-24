@@ -200,14 +200,18 @@ def pour(bottle1, bottle2):
             level_white = i+1
             break
 
-    for i in range(3, 1, -1):
+    for i in range(3, 0, -1):
         if colors_in_bottles[bottle1 - 1][i-1] != "white":
             level_non_white = i
             break
 
+    nr_of_lines = int(text_area.index('end').split('.')[0]) - 1
+    if nr_of_lines == 6:
+        text_area.delete(1.0, END)
+
     text_area.insert('end', '> Pour bottle ' + str(bottle1) + " into bottle " + str(bottle2) + '\n')
     window.update()
-    time.sleep(4)
+    time.sleep(2)
     fill_bottle(bottle2, level_white, colors_in_bottles[bottle1 - 1][level_non_white-1])
     fill_bottle(bottle1, level_non_white, "white")
 
