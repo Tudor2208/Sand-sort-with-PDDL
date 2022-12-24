@@ -4,7 +4,7 @@ import random
 import time
 
 text_area = 0
-list_of_actions = [(1, 4), (1, 5), (2, 1), (3, 2)]
+list_of_actions = []
 window = ""
 my_canvas = ""
 bottle_1_1 = ""
@@ -62,6 +62,13 @@ def generate_game():
                 fill_bottle(j + 1, i + 1, "blue")
                 blue += 1
 
+    for i in range(4, 6):
+        fill_bottle(i, 1, 'white')
+        fill_bottle(i, 2, 'white')
+        fill_bottle(i, 3, 'white')
+
+    text_area.delete(1.0, END)
+
 
 def fill_bottle(rect_nr, level, color):
     global my_canvas
@@ -79,7 +86,6 @@ def fill_bottle(rect_nr, level, color):
 
 def pour(bottle1, bottle2):
     # from bottle1 to bottle2
-   
     level_white = 0
     level_non_white = 0
     for i in range(3):
@@ -92,14 +98,15 @@ def pour(bottle1, bottle2):
             level_non_white = i
             break
 
+    text_area.insert('end', '> Pour bottle ' + str(bottle1) + " into bottle " + str(bottle2) + '\n')
+    window.update()
+    time.sleep(2)
     fill_bottle(bottle2, level_white, colors_in_bottles[bottle1 - 1][level_non_white-1])
     fill_bottle(bottle1, level_non_white, "white")
 
 
 def do_actions():
     for bottle1, bottle2 in list_of_actions:
-        window.update()
-        time.sleep(1)
         pour(bottle1, bottle2)
 
 
@@ -162,10 +169,10 @@ def create_start_window():
     text_area = Text(window, height=5, width=70, font=("Times New Roman", 20))
     text_area.place(x="200", y="600")
 
-    btn_solve = tk.Button(window, text="Solve", font=("Times New Roman", 22), command=do_actions)
-    btn_solve.place(x="1100", y="250")
+    btn_solve = tk.Button(window, text="Solve", font=("Times New Roman", 22), command=do_actions, bg="#99baf0")
+    btn_solve.place(x="1125", y="250")
 
-    btn_new_game = tk.Button(window, text="New game", font=("Times New Roman", 22), command=generate_game)
+    btn_new_game = tk.Button(window, text="New game", font=("Times New Roman", 22), command=generate_game, bg="#99baf0")
     btn_new_game.place(x="1100", y="350")
 
     my_canvas.pack()
