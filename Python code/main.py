@@ -120,7 +120,6 @@ def get_init_statements():
 
     init_statements += "\n"
 
-    k = 0
     for i in range(0, 7, 3):
         init_statements += "(is-on " + colors[i] + " " + colors[i+1] + ") \n"
         init_statements += "(is-on " + colors[i+1] + " " + colors[i+2] + ") \n"
@@ -133,6 +132,7 @@ def generate_game():
     red = 0
     green = 0
     blue = 0
+
     for j in range(3):
         for i in range(3):
             random_nr = random.randint(1, 3)
@@ -160,11 +160,10 @@ def generate_game():
         fill_bottle(i, 2, 'white')
         fill_bottle(i, 3, 'white')
 
-    text_area.delete(1.0, END)
     statements = get_init_statements()
     generate_problem_file('../part1', '../part2', statements)
-    subprocess.check_call(['./fast-downward.py', 'domain_sand_sort.PDDL', 'problem_sand_sort2.PDDL', '--search', "astar(blind())"], cwd='../../downward')
-    parse_plan_file('../../downward/sas_plan')
+    subprocess.check_call(['./fast-downward.py', 'domain_sand_sort.PDDL', 'problem_sand_sort2.PDDL', '--search', "astar(blind())"], cwd='../downward')
+    parse_plan_file('../downward/sas_plan')
 
 
 def generate_problem_file(part1, part2, statements):
@@ -173,7 +172,7 @@ def generate_problem_file(part1, part2, statements):
             file1 = f1.read()
             file2 = f2.read()
             new_file = file1 + statements + file2
-            with open('../../downward/problem_sand_sort2.PDDL', "w") as f:
+            with open('../downward/problem_sand_sort2.PDDL', "w") as f:
                 f.write(new_file)
 
 
@@ -211,14 +210,18 @@ def pour(bottle1, bottle2):
 
     text_area.insert('end', '> Pour bottle ' + str(bottle1) + " into bottle " + str(bottle2) + '\n')
     window.update()
-    time.sleep(2)
+    time.sleep(1.5)
     fill_bottle(bottle2, level_white, colors_in_bottles[bottle1 - 1][level_non_white-1])
     fill_bottle(bottle1, level_non_white, "white")
 
 
 def do_actions():
+    text_area.delete(1.0, END)
     for bottle1, bottle2 in list_of_actions:
         pour(bottle1, bottle2)
+
+    text_area.delete(1.0, END)
+    text_area.insert('end', 'Done!')
 
 
 def create_start_window():
@@ -297,6 +300,6 @@ if __name__ == '__main__':
     frame = Frame(window, background='#ecf0ce')
     frame.pack()
 
-
     generate_game()
+    text_area.insert('end', 'Press the button "Solve" for sorting the sand...')
     window.mainloop()
