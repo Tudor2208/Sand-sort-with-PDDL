@@ -1,6 +1,11 @@
 from tkinter import *
 import tkinter as tk
+import random
+import time
 
+text_area = 0
+list_of_actions = [(1, 4), (1, 5), (2, 1), (3, 2)]
+window = ""
 my_canvas = ""
 bottle_1_1 = ""
 bottle_1_2 = ""
@@ -22,9 +27,45 @@ bottle_5_1 = ""
 bottle_5_2 = ""
 bottle_5_3 = ""
 
+colors_in_bottles = [
+    [0, 0, 0],
+    [0, 0, 0],
+    [0, 0, 0],
+    ['white', 'white', 'white'],
+    ['white', 'white', 'white']
+]
+
+
+def generate_game():
+    red = 0
+    green = 0
+    blue = 0
+    for j in range(3):
+        for i in range(3):
+            random_nr = random.randint(1, 3)
+            if random_nr == 1 and red < 3:
+                fill_bottle(j+1, i+1, "red")
+                red += 1
+            elif random_nr == 2 and green < 3:
+                fill_bottle(j+1, i+1, "green")
+                green += 1
+            elif random_nr == 3 and blue < 3:
+                fill_bottle(j+1, i+1, "blue")
+                blue += 1
+            elif red < 3:
+                fill_bottle(j + 1, i + 1, "red")
+                red += 1
+            elif green < 3:
+                fill_bottle(j + 1, i + 1, "green")
+                green += 1
+            elif blue < 3:
+                fill_bottle(j + 1, i + 1, "blue")
+                blue += 1
+
 
 def fill_bottle(rect_nr, level, color):
     global my_canvas
+    colors_in_bottles[rect_nr - 1][level - 1] = color
     if level == 3:
         level = 1
     elif level == 1:
@@ -36,8 +77,34 @@ def fill_bottle(rect_nr, level, color):
     Canvas.itemconfig(my_canvas, fill=color, tagOrId=my_var)
 
 
+def pour(bottle1, bottle2):
+    # from bottle1 to bottle2
+   
+    level_white = 0
+    level_non_white = 0
+    for i in range(3):
+        if colors_in_bottles[bottle2 - 1][i] == "white":
+            level_white = i+1
+            break
+
+    for i in range(3, 1, -1):
+        if colors_in_bottles[bottle1 - 1][i-1] != "white":
+            level_non_white = i
+            break
+
+    fill_bottle(bottle2, level_white, colors_in_bottles[bottle1 - 1][level_non_white-1])
+    fill_bottle(bottle1, level_non_white, "white")
+
+
+def do_actions():
+    for bottle1, bottle2 in list_of_actions:
+        window.update()
+        time.sleep(1)
+        pour(bottle1, bottle2)
+
+
 def create_start_window():
-    global my_canvas
+    global my_canvas, window, text_area
     global bottle_1_1, bottle_1_2, bottle_1_3
     global bottle_2_1, bottle_2_2, bottle_2_3
     global bottle_3_1, bottle_3_2, bottle_3_3
@@ -95,10 +162,10 @@ def create_start_window():
     text_area = Text(window, height=5, width=70, font=("Times New Roman", 20))
     text_area.place(x="200", y="600")
 
-    btn_solve = tk.Button(window, text="Solve", font=("Times New Roman", 22))
+    btn_solve = tk.Button(window, text="Solve", font=("Times New Roman", 22), command=do_actions)
     btn_solve.place(x="1100", y="250")
 
-    btn_new_game = tk.Button(window, text="New game", font=("Times New Roman", 22))
+    btn_new_game = tk.Button(window, text="New game", font=("Times New Roman", 22), command=generate_game)
     btn_new_game.place(x="1100", y="350")
 
     my_canvas.pack()
@@ -111,7 +178,5 @@ if __name__ == '__main__':
     frame = Frame(window, background='#ecf0ce')
     frame.pack()
 
-    fill_bottle(1, 1, "red")
-    fill_bottle(1, 2, "green")
-    fill_bottle(1, 3, "blue")
+    generate_game()
     window.mainloop()
