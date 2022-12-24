@@ -1,0 +1,22 @@
+       
+
+    )
+
+    (:goal 
+        (and
+        
+            (is-on R1 R2)
+            (is-on R2 R3)
+            (is-on B1 B2)
+            (is-on B2 B3)
+            (is-on G1 G2)
+            (is-on G2 G3)
+
+        )
+    
+            
+
+    )
+
+
+    )
