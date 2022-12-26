@@ -5,12 +5,133 @@
     (:goal 
         (and
         
-            (is-on R1 R2)
-            (is-on R2 R3)
-            (is-on B1 B2)
-            (is-on B2 B3)
-            (is-on G1 G2)
-            (is-on G2 G3)
+        	(or
+        		
+        		(and
+        			
+        			(is-on R1 R2)
+            			(is-on R2 R3)
+        		)
+        	
+        		(and
+        			
+        			(is-on R1 R3)
+            			(is-on R3 R2)
+        		)
+        	
+        		
+        		(and
+        			
+        			(is-on R2 R1)
+            			(is-on R1 R3)
+        		)
+        		
+        		(and
+        			
+        			(is-on R2 R3)
+            			(is-on R3 R1)
+        		)
+        		
+        		(and
+        			
+        			(is-on R3 R1)
+            			(is-on R1 R2)
+        		)
+        		
+        		(and
+        			
+        			(is-on R3 R2)
+            			(is-on R2 R1)
+        		)
+        	
+        	)
+           
+           
+           (or
+           
+           
+           		(and
+        			
+        			(is-on G1 G2)
+            			(is-on G2 G3)
+        		)
+        	
+        		(and
+        			
+        			(is-on G1 G3)
+            			(is-on G3 G2)
+        		)
+        	
+        		
+        		(and
+        			
+        			(is-on G2 G1)
+            			(is-on G1 G3)
+        		)
+        		
+        		(and
+        			
+        			(is-on G2 G3)
+            			(is-on G3 G1)
+        		)
+        		
+        		(and
+        			
+        			(is-on G3 G1)
+            			(is-on G1 G2)
+        		)
+        		
+        		(and
+        			
+        			(is-on G3 G2)
+            			(is-on G2 G1)
+        		)
+           
+           
+           )
+           
+           
+           (or
+           
+           		(and
+        			
+        			(is-on B1 B2)
+            			(is-on B2 B3)
+        		)
+        	
+        		(and
+        			
+        			(is-on B1 B3)
+            			(is-on B3 B2)
+        		)
+        	
+        		
+        		(and
+        			
+        			(is-on B2 B1)
+            			(is-on B1 B3)
+        		)
+        		
+        		(and
+        			
+        			(is-on B2 B3)
+            			(is-on B3 B1)
+        		)
+        		
+        		(and
+        			
+        			(is-on B3 B1)
+            			(is-on B1 B2)
+        		)
+        		
+        		(and
+        			
+        			(is-on B3 B2)
+            			(is-on B2 B1)
+        		)
+           
+           
+           )
 
         )
     

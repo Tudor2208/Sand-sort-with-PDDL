@@ -1,7 +1,7 @@
 (define (problem sand-sort-problem) 
     (:domain sand-sort)
     (:objects 
-        bottle1 bottle2 bottle3 bottle4 bottle5
+        bottle1 bottle2 bottle3 bottle4
         R1 R2 R3
         G1 G2 G3
         B1 B2 B3
@@ -25,6 +25,6 @@
         (size-3 bottle2)
         (size-3 bottle3)
         (size-0 bottle4)
-        (size-0 bottle5)
+        
         
         
